@@ -1,0 +1,30 @@
+{
+  "name": "chalenge-1",
+  "version": "1.0.0",
+  "author": "samuelguedesalves <samuelguedes7070@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "set NODE_ENV=dev & ts-node-dev --ignore-watch node_modules --files src/server.ts",
+    "typeorm": "set NODE_ENV=dev & ts-node-dev node_modules/typeorm/cli.js",
+    "build": "tsc && set NODE_ENV=prod && typeorm migration:run",
+    "start": "set NODE_ENV=prod & node dist/server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.30"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.1",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.11",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/node": "^14.14.25",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3"
+  }
+}
