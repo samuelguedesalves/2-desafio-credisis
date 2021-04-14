@@ -15,7 +15,7 @@ interface Response {
   token: string;
 }
 
-export default async function generateTokenService ({ email, password }: Request): Promise<Response> {
+export default async function authUserService ({ email, password }: Request): Promise<Response> {
   const userRepository = getRepository(User);
 
   const userExists = await userRepository.findOne({ where: { email } });

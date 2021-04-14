@@ -1,43 +1,64 @@
 import { Router } from 'express';
-import debitOperationService from '../services/debitOperationService';
-import listOperationsService from '../services/listOperationsService';
+
+import authUser from '../middlewares/authUser';
+
+import listStatesService from '../services/listStatesService';
+import createStateService from '../services/createStateService';
+import updateStateService from '../services/updateStateService';
+import deleteStateService from '../services/deleteStateService';
 
 const stateRoutes = Router();
 
+// LIST STATES
+stateRoutes.get('/', async (request, response) => {
+  try {
+    const states = await listStatesService();
+
+    return response.status(200).json(states);
+  } catch (error) {
+    return response.status(500).json({ error: 'internal server error' });
+  }
+})
+
 // CREATE A STATE
-stateRoutes.post('/debit', async (request, response) => {
+stateRoutes.post('/', authUser, async (request, response) => {
   try {
     const {
-      destination_account,
-      value,
-      description,
-      system
+      name
     } = request.body;
 
-    const accountId = request.accountId;
-
-    const operation = await debitOperationService({
-      accountId,
-      destination_account,
-      value,
-      description,
-      system,
+    const state = await createStateService({
+      name
     })
 
-    return response.status(200).json({ operation });
+    return response.status(201).json(state);
   } catch (error) {
     return response.status(error.status).json({ error: error.message });
   }
 })
 
-// LIST A STATE
-stateRoutes.get('/', async (request, response) => {
+// UPDATE A STATE
+stateRoutes.patch('/:id', authUser, async (request, response) => {
   try {
-    const accountId = request.accountId;
+    const { name } = request.body;
+    const stateId = request.params.id;
 
-    const operations = await listOperationsService(accountId);
+    const state = await updateStateService({ stateId, name });
 
-    return response.status(200).json(operations);
+    return response.status(200).json(state);
+  } catch (error) {
+    return response.status(error.status).json({ error: error.message });
+  }
+})
+
+// DELETE A STATE
+stateRoutes.delete('/:id', authUser, async (request, response) => {
+  try {
+    const stateId = request.params.id;
+
+    await deleteStateService({ stateId });
+
+    return response.status(200).send();
   } catch (error) {
     return response.status(error.status).json({ error: error.message });
   }

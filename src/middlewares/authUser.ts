@@ -9,7 +9,7 @@ interface TokenPayload {
   exp: number;
 }
 
-export default function authAccess (
+export default function authUser (
   request:Request,
   response: Response,
   next: NextFunction

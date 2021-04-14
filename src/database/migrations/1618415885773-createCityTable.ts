@@ -53,7 +53,9 @@ export class createCityTable1618415885773 implements MigrationInterface {
         name: 'stateFk',
         columnNames: ['state_fk'],
         referencedTableName: 'states',
-        referencedColumnNames: ['id']
+        referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }));
     }
 

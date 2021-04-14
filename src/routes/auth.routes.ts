@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import ApiError from '../errors/ApiError';
-import authAccountService from '../services/authAccountService'
+import authUserService from '../services/authUserService'
 
 const authRoutes = Router();
 
@@ -13,7 +13,7 @@ authRoutes.post('/', async (request, response) => {
       throw new ApiError('missing param in request', 400);
     }
 
-    const { user, token } = await authAccountService({ email, password });
+    const { user, token } = await authUserService({ email, password });
 
     return response.status(200).json({ user, token });
 
