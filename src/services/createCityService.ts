@@ -34,13 +34,6 @@ export default async function createCityService ({
   if(!stateExists)
     throw new ApiError("invalid state, instance is not found", 404);
 
-  console.log(
-    name,
-    prefect,
-    population,
-    belong_state_id
-  );
-
   const city = cityRepository.create({
     name,
     prefect,
